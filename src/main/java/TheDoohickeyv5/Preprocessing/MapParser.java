@@ -23,14 +23,6 @@ public class MapParser {
         return output;
     }
 
-    // Helps with the beatmap section processing
-    private void timingPreprocessing(List<TimingPoint> tpList, SSMap map){
-        TimingPoint first = tpList.get(0);
-        TimingPoint last = tpList.get(tpList.size() - 1);
-        tpList.set(0, new TimingPoint(first.bpm(), map.getMapdata().firstKey()));
-        tpList.add(new TimingPoint(last.bpm(), map.getMapdata().lastKey()));
-    }
-
 
     private List<Distance> sectionDistances(Collection<List<Note>> notes) {
         List<Distance> output = new ArrayList<>();
