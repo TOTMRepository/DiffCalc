@@ -1,6 +1,7 @@
 package TheDoohickeyv5.Preprocessing;
 
 import TheDoohickeyv5.Objects.Note;
+import TheDoohickeyv5.Objects.SSMap;
 
 import java.io.FileNotFoundException;
 
@@ -22,5 +23,10 @@ public class MapProcesser extends Processer<Note> {
         float y = Float.parseFloat(noteParts[1]);
         int timestamp = Integer.parseInt(noteParts[2]);
         return new Note(x, y, timestamp);
+    }
+
+    @Override
+    void addElement(SSMap map, Note note) {
+        map.addNote(note);
     }
 }

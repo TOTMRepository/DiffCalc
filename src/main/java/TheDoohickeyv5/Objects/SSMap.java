@@ -11,23 +11,17 @@ public class SSMap {
         timingPoints = new ArrayList<>();
     }
 
-    // it is what it fucking is
-    public void add(Object obj){
-        if (obj.getClass() == Note.class)
-            addNote((Note) obj);
-        else if (obj.getClass() == TimingPoint.class)
-            addTimingPoint((TimingPoint) obj);
-    }
-
-    public void addNote(Note note) {
+    public void addNote(Note note){
         List<Note> notes;
-        if (mapdata.containsKey(note.timestamp))
-            notes = mapdata.get(note.timestamp);
+        if (mapdata.containsKey(note.getTimestamp()))
+            notes = mapdata.get(note.getTimestamp());
         else
             notes = new ArrayList<>();
         notes.add(note);
-        mapdata.put(note.timestamp, notes);
+        mapdata.put(note.getTimestamp(), notes);
     }
+
+
 
     public void addTimingPoint(TimingPoint tp) {
         timingPoints.add(tp);

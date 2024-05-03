@@ -1,5 +1,6 @@
 package TheDoohickeyv5.Preprocessing;
 
+import TheDoohickeyv5.Objects.SSMap;
 import TheDoohickeyv5.Objects.TimingPoint;
 
 import java.io.FileNotFoundException;
@@ -21,5 +22,10 @@ public class MetadataProcesser extends Processer<TimingPoint> {
         float bpm = Float.parseFloat(pointParts[0]);
         int timestamp = Integer.parseInt(pointParts[1]);
         return new TimingPoint(bpm, timestamp);
+    }
+
+    @Override
+    void addElement(SSMap map, TimingPoint tp) {
+        map.addTimingPoint(tp);
     }
 }

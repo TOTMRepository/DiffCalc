@@ -16,11 +16,12 @@ public abstract class Processer<T> {
 
     abstract void readFile();
     abstract T parse(String s);
+    abstract void addElement(SSMap map, T element);
 
     public void processData(SSMap map) {
         readFile();
         for (String s : data.split(",")) {
-            map.add(parse(s));
+            addElement(map, parse(s));
         }
     }
 }

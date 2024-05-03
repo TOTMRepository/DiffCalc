@@ -27,6 +27,6 @@ public class Distance {
 
     @Override
     public String toString() {
-        return "\nDistance: " + getEuclidDist() + "\t" + "Spacing: " + ms + "\t" + "Angle: " + getAngle() + "\n";
+        return "\nDistance: " + getEuclidDist() + "\t" + "Spacing: " + ms + "\t" + "Angle: " + getAngle();
     }
 }
