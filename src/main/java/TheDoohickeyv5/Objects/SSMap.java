@@ -4,11 +4,10 @@ import java.util.*;
 
 public class SSMap {
     private final TreeMap<Integer, List<Note>> mapdata;
-    private final List<TimingPoint> timingPoints;
+    private double bpm = 0;
 
     public SSMap(){
         mapdata = new TreeMap<>();
-        timingPoints = new ArrayList<>();
     }
 
     public void addNote(Note note){
@@ -21,10 +20,8 @@ public class SSMap {
         mapdata.put(note.getTimestamp(), notes);
     }
 
-
-
     public void addTimingPoint(TimingPoint tp) {
-        timingPoints.add(tp);
+        // timingPoints.add(tp);
     }
 
     public List<Note> getNoteAt(int timestamp) {
@@ -35,7 +32,11 @@ public class SSMap {
         return mapdata;
     }
 
-    public List<TimingPoint> getTimingPoints() {
-        return timingPoints;
+    public double getBpm(){
+        return bpm;
+    }
+
+    public void setBpm(double bpm){
+        this.bpm = bpm;
     }
 }

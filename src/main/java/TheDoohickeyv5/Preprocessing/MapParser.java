@@ -13,6 +13,36 @@ public class MapParser {
         // will be moved
         Processer<Note> p = new MapProcesser(source + ".txt");
         p.processData(map);
+        List<Distance> distanceList = getNoteDistances();
+        System.out.println(getBpm(distanceList));
+    }
+
+    private double getBpm(List<Distance> distanceList) {
+        Map<Integer, Integer> mappedMs = new HashMap<>();
+        for (Distance d : distanceList) {
+            int ms = d.getMs();
+            if (!d.isLongJump()) {
+                ms *= 2;
+            }
+            if (mappedMs.containsKey(ms)) {
+                mappedMs.put(ms, mappedMs.get(ms) + 1);
+            }
+            else
+                mappedMs.put(ms, 1);
+        }
+        return 30000.0/getMaxValue(mappedMs);
+    }
+
+    private int getMaxValue(Map<Integer, Integer> mappedMs) {
+        int maxValue = -1;
+        int maxKey = -1;
+        for (Map.Entry<Integer, Integer> entry : mappedMs.entrySet()) {
+            if (entry.getValue() > maxValue) {
+                maxValue = entry.getValue();
+                maxKey = entry.getKey();
+            }
+        }
+        return maxKey;
     }
 
     public List<Distance> getNoteDistances() {
@@ -41,10 +71,7 @@ public class MapParser {
     }
 
     private Distance getDistance(Note n1, Note n2) {
-        double xDist = Math.abs(n1.getxCoordinate() - n2.getxCoordinate());
-        double yDist = Math.abs(n1.getyCoordinate() - n2.getyCoordinate());
-        int time = (n2.getTimestamp() - n1.getTimestamp());
-        return new Distance(xDist, yDist, time);
+        return new Distance(n1, n2);
     }
 
     private List<Note> meganoteToNote(List<Note> note) {
