@@ -1,5 +1,6 @@
 package TheDoohickeyv5.Preprocessing;
 
+import TheDoohickeyv5.Calculation.BPMCalculator;
 import TheDoohickeyv5.Objects.*;
 
 import java.io.FileNotFoundException;
@@ -14,35 +15,8 @@ public class MapParser {
         Processer<Note> p = new MapProcesser(source + ".txt");
         p.processData(map);
         List<Distance> distanceList = getNoteDistances();
-        System.out.println(getBpm(distanceList));
-    }
-
-    private double getBpm(List<Distance> distanceList) {
-        Map<Integer, Integer> mappedMs = new HashMap<>();
-        for (Distance d : distanceList) {
-            int ms = d.getMs();
-            if (!d.isLongJump()) {
-                ms *= 2;
-            }
-            if (mappedMs.containsKey(ms)) {
-                mappedMs.put(ms, mappedMs.get(ms) + 1);
-            }
-            else
-                mappedMs.put(ms, 1);
-        }
-        return 30000.0/getMaxValue(mappedMs);
-    }
-
-    private int getMaxValue(Map<Integer, Integer> mappedMs) {
-        int maxValue = -1;
-        int maxKey = -1;
-        for (Map.Entry<Integer, Integer> entry : mappedMs.entrySet()) {
-            if (entry.getValue() > maxValue) {
-                maxValue = entry.getValue();
-                maxKey = entry.getKey();
-            }
-        }
-        return maxKey;
+        BPMCalculator calculator = new BPMCalculator(distanceList);
+        System.out.println(calculator.calculate());
     }
 
     public List<Distance> getNoteDistances() {
