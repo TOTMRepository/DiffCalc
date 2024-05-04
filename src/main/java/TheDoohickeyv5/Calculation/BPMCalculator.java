@@ -29,10 +29,13 @@ public class BPMCalculator extends Calculator<Distance> {
     @Override
     public double calculate() {
         setUpBpmValues(mappedMs);
+        List<Integer> bpmList = getBpmCandidates();
+        return 30000.0/average(bpmList);
+    }
 
+    private List<Integer> getBpmCandidates() {
         List<Integer> bpmReferences = new ArrayList<>();
         int maximum = Integer.MIN_VALUE;
-
         while (true) {
             int nextValue = getMaxValue();
             if (maximum == Integer.MIN_VALUE || isInRange(nextValue, maximum, bpmThreshold)) {
@@ -43,7 +46,7 @@ public class BPMCalculator extends Calculator<Distance> {
                 break;
             mappedMs.remove(nextValue);
         }
-        return 30000.0/average(bpmReferences);
+        return bpmReferences;
     }
 
     private int getMaxValue() {
